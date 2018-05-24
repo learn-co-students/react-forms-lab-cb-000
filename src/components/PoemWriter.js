@@ -11,12 +11,12 @@ class PoemWriter extends React.Component {
   }
 
   validatePoem = (poem) => {
-      const poemArray = poem.split(/[\r\n]/)
+      const poemArray = poem.split(/[\r\n]/).map(line => line.trim())
       const linecount = poemArray.length
       if(linecount === 3){
-        const firstLineCount = poemArray[0].replace(/\s+$/g,"").split(" ").length
-        const secondLineCount = poemArray[1].replace(/\s+$/g,"").split(" ").length
-        const thirdLineCount = poemArray[2].replace(/\s+$/g,"").split(" ").length
+        const firstLineCount = poemArray[0].split(" ").length
+        const secondLineCount = poemArray[1].split(" ").length
+        const thirdLineCount = poemArray[2].split(" ").length
         if(firstLineCount === 5 && secondLineCount === 3 && thirdLineCount === 5) {
           return false
         } else {
@@ -29,8 +29,8 @@ class PoemWriter extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      value: event.target.value
-      notValid: validatePoem(event.target.value)
+      value: event.target.value,
+      notValid: this.validatePoem(event.target.value)
     })
   }
 
