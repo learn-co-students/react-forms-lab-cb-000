@@ -10,33 +10,28 @@ class PoemWriter extends React.Component {
     };
   }
 
-  validatePoem = () => {
-      const poemArray = this.state.value.split(/[\r\n]/)
+  validatePoem = (poem) => {
+      const poemArray = poem.split(/[\r\n]/)
       const linecount = poemArray.length
       if(linecount === 3){
         const firstLineCount = poemArray[0].replace(/\s+$/g,"").split(" ").length
         const secondLineCount = poemArray[1].replace(/\s+$/g,"").split(" ").length
         const thirdLineCount = poemArray[2].replace(/\s+$/g,"").split(" ").length
         if(firstLineCount === 5 && secondLineCount === 3 && thirdLineCount === 5) {
-          this.setState({
-            notValid: false
-          })
+          return false
         } else {
-          this.setState({
-            notValid: true
-          })
+          return true
         }
       } else {
-        this.setState({
-          notValid: true
-        })
+        return true
       }
     }
 
   handleChange = (event) => {
     this.setState({
       value: event.target.value
-    }, this.validatePoem())
+      notValid: validatePoem(event.target.value)
+    })
   }
 
   render() {
